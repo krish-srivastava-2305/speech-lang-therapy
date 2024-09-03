@@ -48,6 +48,7 @@ model Patient {
     id              String           @id @default(cuid())
     email           String           @unique
     name            String?
+    imageUrl        String?
     password        String?
     age             Int
     phone           String?
@@ -59,8 +60,8 @@ model Patient {
     therapist       Therapist?       @relation("TherapistToPatient", fields: [therapistId], references: [id])
     sessionLogs     SessionLog[]
     progressReports ProgressReport[]
-    medicalHistory  String[]
-    medicalRecords  String
+    medicalIssue    String
+    medicalRecords  String?
     createdAt       DateTime         @default(now())
     updatedAt       DateTime         @updatedAt
 }

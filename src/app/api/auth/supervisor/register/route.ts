@@ -6,7 +6,7 @@ import jwt from "jsonwebtoken";
 const prisma = new PrismaClient();
 
 
-export const POST = async (req: NextRequest) => { 
+export const POST = async (req: NextRequest): Promise<NextResponse> => { 
     const { email, password, name, phone, department } = await req.json();
 
     if(!email || !password || !name || !phone || !department) { return NextResponse.json({ error: "Missing required fields" }, { status: 400 }); }
@@ -60,7 +60,10 @@ export const POST = async (req: NextRequest) => {
             return NextResponse.json({ error: "Error creating account" }, { status: 401 });
         }
 
-        return NextResponse.json({ message: "Supervisor ID created" }, { status: 200 }).cookies.set("token", token);
+        const response =  NextResponse.json({ message: "Supervisor ID created", newUser }, { status: 200 })
+
+        response.cookies.set("token", token, { httpOnly: true, maxAge: 604800, path: "/" });
+        return response;
 
     } catch (error) {
         console.error("Error occurred while creating user", error);
