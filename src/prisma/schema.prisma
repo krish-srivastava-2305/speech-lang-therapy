@@ -8,17 +8,20 @@ datasource db {
 }
 
 model Supervisor {
-    id                 String      @id @default(cuid())
-    email              String      @unique
+    id                 String           @id @default(cuid())
+    email              String           @unique
     name               String?
     token              String?
     tokenExpiry        DateTime?
     password           String?
     phone              String?
     department         String?
-    assignedTherapists Therapist[] @relation("SupervisorToTherapist")
-    createdAt          DateTime    @default(now())
-    updatedAt          DateTime    @updatedAt
+    assignedTherapists Therapist[]      @relation("SupervisorToTherapist")
+    assignedPatients   Patient[]        @relation("SupervisorToPatient")
+    progressReports    ProgressReport[]
+    sessionLogs        SessionLog[]
+    createdAt          DateTime         @default(now())
+    updatedAt          DateTime         @updatedAt
 }
 
 model Therapist {
@@ -31,7 +34,7 @@ model Therapist {
     specialization   String?
     city             String?
     state            String?
-    workload         String?
+    workload         Int              @default(0)
     token            String?
     tokenExpiry      DateTime?
     sessionLogs      SessionLog[]
@@ -54,11 +57,13 @@ model Patient {
     phone           String?
     city            String?
     state           String?
-    therapistId     String?
     token           String?
     tokenExpiry     DateTime?
+    therapistId     String?
     therapist       Therapist?       @relation("TherapistToPatient", fields: [therapistId], references: [id])
     sessionLogs     SessionLog[]
+    supervisorId    String?
+    supervisor      Supervisor?      @relation("SupervisorToPatient", fields: [supervisorId], references: [id])
     progressReports ProgressReport[]
     medicalIssue    String
     medicalRecords  String?
@@ -80,6 +85,8 @@ model SessionLog {
     updatedAt        DateTime        @updatedAt
     ProgressReport   ProgressReport? @relation(fields: [progressReportId], references: [id])
     progressReportId String?
+    supervisorId     String?
+    Supervisor       Supervisor?     @relation(fields: [supervisorId], references: [id])
 }
 
 model ProgressReport {
@@ -98,4 +105,6 @@ model ProgressReport {
     status             String
     createdAt          DateTime     @default(now())
     updatedAt          DateTime     @updatedAt
+    supervisorId       String?
+    Supervisor         Supervisor?  @relation(fields: [supervisorId], references: [id])
 }

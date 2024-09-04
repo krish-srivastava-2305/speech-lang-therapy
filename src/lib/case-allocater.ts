@@ -1,10 +1,9 @@
-import { Patient, Therapist } from "@prisma/client";
-
 type TherapistType = {
     id: string;
     city: string | null;
     specialization: string | null;
-    workload: string | null;
+    workload: number | null;
+    supervisorId: string | null;
 };
 
 export function caseAllocater(therapists: Array<TherapistType>, patientCity: string, patientMedicalHistory: string): TherapistType | null {
