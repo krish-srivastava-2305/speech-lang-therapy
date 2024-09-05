@@ -124,6 +124,8 @@ export const POST = async (req: NextRequest) => {
             },
         });
 
+        // send mail to therapist
+
 
         await prisma.supervisor.update({
             where: { id: therapist.supervisorId as string },
@@ -133,6 +135,8 @@ export const POST = async (req: NextRequest) => {
                 },
             },
         });
+
+        // send mail to supervisor
 
         return NextResponse.json({ message: "Account created successfully" }, { status: 200 });
     } catch (error) {

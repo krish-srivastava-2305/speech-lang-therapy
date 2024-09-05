@@ -79,6 +79,10 @@ model SessionLog {
     activities       String[]
     responses        String
     status           String
+    notes            String?
+    duration         String?
+    patientFeedback  String?
+    sessionType      String
     therapistId      String
     therapist        Therapist       @relation(fields: [therapistId], references: [id])
     createdAt        DateTime        @default(now())
@@ -90,21 +94,28 @@ model SessionLog {
 }
 
 model ProgressReport {
-    id                 String       @id @default(cuid())
-    date               DateTime
-    sessionLogs        SessionLog[]
-    recommendations    String[]
-    summary            String
-    supervisorFeedback String
-    patientId          String
-    patient            Patient      @relation(fields: [patientId], references: [id])
-    therapistId        String
-    therapist          Therapist    @relation(fields: [therapistId], references: [id])
-    activities         String[]
-    responses          String
-    status             String
-    createdAt          DateTime     @default(now())
-    updatedAt          DateTime     @updatedAt
-    supervisorId       String?
-    Supervisor         Supervisor?  @relation(fields: [supervisorId], references: [id])
+    id          String       @id @default(cuid())
+    date        DateTime
+    sessionLogs SessionLog[]
+
+    recommendations  String
+    summary          String
+    challenges       String
+    patientBehaviour String
+    improvementAreas String
+    recomendations   String
+    goalsMet         String
+    goalsUnmet       String
+
+    supervisorFeedback          String
+    supervisorFeedbackOnPatient String
+    superVisorRatings           String
+    createdAt                   DateTime    @default(now())
+    updatedAt                   DateTime    @updatedAt
+    supervisorId                String?
+    patientId                   String
+    therapistId                 String
+    therapist                   Therapist   @relation(fields: [therapistId], references: [id])
+    patient                     Patient     @relation(fields: [patientId], references: [id])
+    Supervisor                  Supervisor? @relation(fields: [supervisorId], references: [id])
 }
