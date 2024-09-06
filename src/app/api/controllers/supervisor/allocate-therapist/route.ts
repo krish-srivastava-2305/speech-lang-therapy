@@ -18,7 +18,15 @@ export const POST = async (req: NextRequest) => {
             data: {assignedPatients: {connect: {id: patientId}}}
         });
 
-        // send email to patient
+        await prisma.notifications.create({data: {
+            message: `Patient ${updatedPatient.name} has been allocated to therapist ${newTherapistId}`,
+            date: new Date(),
+            type: "allocation",
+            therapistId: newTherapistId,
+            patientId: patientId,
+            createdAt: new Date(),
+            updatedAt: new Date(),
+        }});
 
         return NextResponse.json({message: "Therapist Allocated", patient: updatedPatient}, { status: 200 });
         

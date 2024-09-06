@@ -41,6 +41,16 @@ export const POST = async (req: NextRequest) => {
                 rating: newRating
             }
         });
+
+        await prisma.notifications.create({ data: {
+            message: `Rating updated for therapist ${therapist.id}`,
+            date: new Date(),
+            type: "rating",
+            therapistId: therapist.id,
+            patientId: patient.id,
+            createdAt: new Date(),
+            updatedAt: new Date()
+        }});
         
         return NextResponse.json({ rating: rating, message: "Rating saved" }, { status: 200 });
 

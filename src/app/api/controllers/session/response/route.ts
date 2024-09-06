@@ -42,6 +42,16 @@ export const POST = async (req: NextRequest) => {
             },
         });
 
+        await prisma.notifications.create({ data: {
+            message: `Session report updated for session ${sessionId}`,
+            date: new Date(),
+            type: "session",
+            therapistId: therapist.id,
+            patientId: session.patientId,
+            createdAt: new Date(),
+            updatedAt: new Date(),
+        }});
+
         // Return the updated session log
         return NextResponse.json({ session }, { status: 200 });
 

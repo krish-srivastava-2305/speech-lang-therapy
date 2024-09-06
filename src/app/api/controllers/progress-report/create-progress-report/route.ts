@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 import jwt from "jsonwebtoken";
+import { data } from "framer-motion/client";
 
 const prisma = new PrismaClient();
 
@@ -95,6 +96,24 @@ export const POST = async (req: NextRequest) => {
     });
 
     // update details of supervisor therapist and patient
+
+    const updateTherapist = await prisma.therapist.update({where: {id: therapist.id}, data: {ProgressReport: {connect: {id: newProgressReport.id}}}});
+
+    const updatePatient = await prisma.patient.update({where: {id: patient.id}, data: {progressReports: {connect: {id: newProgressReport.id}}}});
+
+    const updateSupervisor = await prisma.supervisor.update({where: {id: therapist.supervisorId!}, data: {progressReports: {connect: {id: newProgressReport.id}}}});
+
+    const notification = await prisma.notifications.create({ 
+      data:{
+        message: `Progress report for patient ${patient.name} created by therapist ${therapist.name}`,
+        date: new Date(),
+        type: "progressReport",
+        patientId: patient.id,
+        supervisorId: therapist.supervisorId!,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+    }});
+
 
     return NextResponse.json(
       {

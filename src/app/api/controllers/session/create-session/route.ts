@@ -66,6 +66,17 @@ export const POST = async (req: NextRequest) => {
                 }
             } 
         });
+
+
+        await prisma.notifications.create({ data: {
+            message: `New session created for patient ${patient.name}`,
+            date: new Date(),
+            type: "session",
+            therapistId: therapist.id,
+            patientId: patient.id,
+            createdAt: new Date(),
+            updatedAt: new Date(),
+        }});
           
         return NextResponse.json({ message: "Session created successfully", session }, { status: 201 });
 

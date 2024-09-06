@@ -7,8 +7,11 @@ const prisma = new PrismaClient();
 
 export const POST = async (req: NextRequest) => {
     const { email, password, name, phone, department, specialization, city, state, supervisor } = await req.json();
+    console.log(email)
+    console.log(password)
+    console.log(name, phone, department, specialization, city, state, supervisor)
 
-    if(!email || !password || !name || !phone || !department || !specialization || !city || !state || !supervisor) { return NextResponse.json({ error: "Missing required fields" }, { status: 400 }); }
+    // if(!email || !password || !name || !phone || !department || !specialization || !city || !state || !supervisor) { return NextResponse.json({ error: "Missing required fields" }, { status: 400 }); }
 
     try {
         const existingUser = await prisma.therapist.findUnique({ select: { id: true }, where: { email } });

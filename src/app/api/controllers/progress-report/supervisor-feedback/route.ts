@@ -17,15 +17,15 @@ export const PATCH = async (req: NextRequest) => {
     const {
       supervisorFeedback,
       supervisorFeedbackOnPatient,
-      superVisorRatings,
+      supervisorRatings,
       supervisorId,
     } = await req.json();
 
     // Validate the input
     if (
-      !supervisorFeedback &&
-      !supervisorFeedbackOnPatient &&
-      !superVisorRatings
+      !supervisorFeedback ||
+      !supervisorFeedbackOnPatient ||
+      !supervisorRatings
     ) {
       return NextResponse.json(
         { error: "No feedback data provided" },
@@ -39,11 +39,22 @@ export const PATCH = async (req: NextRequest) => {
       data: {
         supervisorFeedback,
         supervisorFeedbackOnPatient,
-        superVisorRatings,
+        supervisorRatings,
         supervisorId,
         updatedAt: new Date(),
       },
     });
+
+    await prisma.notifications.create({
+      data: {
+        message: `Supervisor feedback updated for progress report ${id}`,
+        date : new Date(),
+        type: "feedback",
+        therapistId: updatedProgressReport.therapistId,
+        patientId: updatedProgressReport.patientId,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      }});
 
     return NextResponse.json(
       {
@@ -61,5 +72,7 @@ export const PATCH = async (req: NextRequest) => {
       { error: "Error updating progress report" },
       { status: 500 }
     );
+  } finally {
+    await prisma.$disconnect();
   }
 };

@@ -38,6 +38,16 @@ export const POST = async (req: NextRequest) => {
             data: { patientFeedback: feedback },
         });
 
+        await prisma.notifications.create({ data: {
+            message: `Patient feedback updated for session ${sessionId}`,
+            date: new Date(),
+            type: "feedback",
+            therapistId: session.therapistId,
+            patientId: session.patientId,
+            createdAt: new Date(),
+            updatedAt: new Date(),
+        }});
+
         // Respond with the updated session log
         return NextResponse.json({ session }, { status: 200 });
         
