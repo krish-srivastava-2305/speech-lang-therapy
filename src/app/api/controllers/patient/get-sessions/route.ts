@@ -18,8 +18,10 @@ export const GET = async (req: NextRequest) => {
         }
         
         const patient: any = await prisma.patient.findUnique({ where: {email: decodededToken.email} });
+        if(!patient) { return NextResponse.json({ error: "Unauthorized" }, { status: 401 }); }
+        const sessions =  await prisma.sessionLog.findMany({ where: {patientId: patient.id} });
 
-        return NextResponse.json({message: "Sessions Sent", sessions: patient?.sessionLogs});
+        return NextResponse.json({sessions, message: "Sessions Sent"}, { status: 200 });
         
     } catch (error) {
         return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });

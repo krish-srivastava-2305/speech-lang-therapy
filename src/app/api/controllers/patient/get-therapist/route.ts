@@ -30,7 +30,7 @@ export const GET = async (req: NextRequest) => {
         });
         if (!therapist) return NextResponse.json({ error: "Therapist not found" }, { status: 404 });
 
-        return NextResponse.json({ therapist: therapist, message: "Therapist data sent" }, { status: 200 });
+        return NextResponse.json({ therapist, message: "Therapist data sent" }, { status: 200 });
 
     } catch (error) {
         return NextResponse.json({ error: "Internal server error" }, { status: 500 });

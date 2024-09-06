@@ -19,18 +19,13 @@ export const GET = async (req: NextRequest) => {
             where: {
                 email: email
             },
-            select: {  id: true, supervisorId: true }
+            select: {  id: true, supervisor: true }
         });
         if (!patient) return NextResponse.json({ error: "Patient not found" }, { status: 404 });
 
-        const therapist = await prisma.therapist.findUnique({
-            where: {
-                id: patient.supervisorId?.toString()
-            }
-        });
-        if (!therapist) return NextResponse.json({ error: "Therapist not found" }, { status: 404 });
+        
 
-        return NextResponse.json({ therapist: therapist, message: "Therapist data sent" }, { status: 200 });
+        return NextResponse.json({ supervisor: patient.supervisor, message: "Supervisor data sent" }, { status: 200 });
 
     } catch (error) {
         return NextResponse.json({ error: "Internal server error" }, { status: 500 });

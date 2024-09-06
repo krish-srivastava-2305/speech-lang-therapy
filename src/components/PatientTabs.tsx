@@ -1,8 +1,9 @@
 "use client";
-
-import Image from "next/image";
 import { Tabs } from "@/components/ui/tabs";
 import PatientSessions from "./PatientSessions";
+import PatientReports from "./PatientReports";
+import TherapistDetails from "./TherapistDetails";
+import SupervisorDetails from "./SupervisorDetails";
 
 export function PatientTab() {
   const tabs = [
@@ -14,42 +15,32 @@ export function PatientTab() {
       ),
     },
     {
-      title: "Services",
-      value: "services",
+      title: "Reports",
+      value: "reports",
       content: (
-        <div className="w-full overflow-hidden relative h-full rounded-2xl p-10 text-xl md:text-4xl font-bold text-white bg-gradient-to-br from-purple-700 to-violet-900">
-          <p>Services tab</p>
-          <DummyContent />
-        </div>
+        <PatientReports />
       ),
     },
     {
-      title: "Playground",
-      value: "playground",
+      title: "Therapist",
+      value: "therapist",
       content: (
-        <div className="w-full overflow-hidden relative h-full rounded-2xl p-10 text-xl md:text-4xl font-bold text-white bg-gradient-to-br from-purple-700 to-violet-900">
-          <p>Playground tab</p>
-          <DummyContent />
-        </div>
+        <TherapistDetails />
       ),
     },
     {
-      title: "Content",
-      value: "content",
+      title: "Supervisor",
+      value: "supervisor",
       content: (
-        <div className="w-full overflow-hidden relative h-full rounded-2xl p-10 text-xl md:text-4xl font-bold text-white bg-gradient-to-br from-purple-700 to-violet-900">
-          <p>Content tab</p>
-          <DummyContent />
-        </div>
+        <SupervisorDetails /> 
       ),
     },
     {
-      title: "Random",
-      value: "random",
+      title: "Notifcations",
+      value: "notifications",
       content: (
         <div className="w-full overflow-hidden relative h-full rounded-2xl p-10 text-xl md:text-4xl font-bold text-white bg-gradient-to-br from-purple-700 to-violet-900">
           <p>Random tab</p>
-          <DummyContent />
         </div>
       ),
     },
@@ -61,15 +52,4 @@ export function PatientTab() {
     </div>
   );
 }
-
-const DummyContent = () => {
-  return (
-    <Image
-      src="/linear.webp"
-      alt="dummy image"
-      width="1000"
-      height="1000"
-      className="object-cover object-left-top h-[60%]  md:h-[90%] absolute -bottom-10 inset-x-0 w-[90%] rounded-xl mx-auto"
-    />
-  );
-};
+export default PatientTab;

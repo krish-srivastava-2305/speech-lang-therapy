@@ -18,82 +18,94 @@ model Supervisor {
     department         String?
     assignedTherapists Therapist[]      @relation("SupervisorToTherapist")
     assignedPatients   Patient[]        @relation("SupervisorToPatient")
-    progressReports    ProgressReport[] @relation("SupervisorToProgressReport")
+    progressReports    ProgressReport[]
     sessionLogs        SessionLog[]
     createdAt          DateTime         @default(now())
     updatedAt          DateTime         @updatedAt
 }
 
 model Therapist {
-    id               String           @id @default(cuid())
-    email            String           @unique
-    name             String?
-    password         String?
-    phone            String?
-    department       String?
-    specialization   String?
-    city             String?
-    state            String?
-    workload         Int              @default(0)
-    token            String?
-    tokenExpiry      DateTime?
+    id             String  @id @default(cuid())
+    email          String  @unique
+    name           String?
+    password       String?
+    phone          String?
+    department     String?
+    specialization String?
+    city           String?
+    state          String?
+    workload       Int     @default(0)
+
+    token       String?
+    tokenExpiry DateTime?
+
     sessionLogs      SessionLog[]
     supervisorId     String?
-    supervisor       Supervisor?      @relation("SupervisorToTherapist", fields: [supervisorId], references: [id])
-    assignedPatients Patient[]        @relation("TherapistToPatient")
-    rating           Float?
-    createdAt        DateTime         @default(now())
-    updatedAt        DateTime         @updatedAt
-    ProgressReport   ProgressReport[]
+    supervisor       Supervisor?  @relation("SupervisorToTherapist", fields: [supervisorId], references: [id])
+    assignedPatients Patient[]    @relation("TherapistToPatient")
+
+    rating Float?
+
+    createdAt      DateTime         @default(now())
+    updatedAt      DateTime         @updatedAt
+    ProgressReport ProgressReport[]
 }
 
 model Patient {
-    id              String           @id @default(cuid())
-    email           String           @unique
-    name            String?
-    imageUrl        String?
-    password        String?
-    age             Int
-    phone           String?
-    city            String?
-    state           String?
-    token           String?
-    tokenExpiry     DateTime?
+    id             String  @id @default(cuid())
+    email          String  @unique
+    name           String?
+    imageUrl       String?
+    password       String?
+    age            Int
+    phone          String?
+    city           String?
+    state          String?
+    medicalIssue   String
+    medicalRecords String?
+
+    token       String?
+    tokenExpiry DateTime?
+
     therapistId     String?
     therapist       Therapist?       @relation("TherapistToPatient", fields: [therapistId], references: [id])
     sessionLogs     SessionLog[]
     supervisorId    String?
     supervisor      Supervisor?      @relation("SupervisorToPatient", fields: [supervisorId], references: [id])
     progressReports ProgressReport[]
-    medicalIssue    String
-    medicalRecords  String?
-    createdAt       DateTime         @default(now())
-    updatedAt       DateTime         @updatedAt
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 }
 
 model SessionLog {
-    id               String          @id @default(cuid())
-    date             DateTime
+    id   String   @id @default(cuid())
+    date DateTime
+
+    activities  String
+    duration    String
+    sessionType String
+    status      String
+
+    responses String?
+    notes     String?
+
+    patientFeedback String?
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    progressReportId String?
     patientId        String
-    patient          Patient         @relation(fields: [patientId], references: [id])
-    activities       String[]
-    responses        String //responses by the patient which will be updated by the therapist
-    status           String
-    notes            String?
-    duration         String?
-    patientFeedback  String?
-    sessionType      String
+    supervisorId     String?
     therapistId      String
     therapist        Therapist       @relation(fields: [therapistId], references: [id])
-    createdAt        DateTime        @default(now())
-    updatedAt        DateTime        @updatedAt
+    patient          Patient         @relation(fields: [patientId], references: [id])
     ProgressReport   ProgressReport? @relation(fields: [progressReportId], references: [id])
-    progressReportId String?
-    supervisorId     String?
     Supervisor       Supervisor?     @relation(fields: [supervisorId], references: [id])
 }
 
-model ProgressReport{
+model ProgressReport {
     id          String       @id @default(cuid())
     date        DateTime
     sessionLogs SessionLog[]
@@ -106,15 +118,17 @@ model ProgressReport{
     goalsMet         String
     goalsUnmet       String
 
-    supervisorFeedback          String
-    supervisorFeedbackOnPatient String
-    supervisorRatings           String
-    createdAt                   DateTime    @default(now())
-    updatedAt                   DateTime    @updatedAt
-    supervisorId                String?
-    patientId                   String
-    therapistId                 String
-    therapist                   Therapist   @relation(fields: [therapistId], references: [id])
-    patient                     Patient     @relation(fields: [patientId], references: [id])
-    Supervisor                  Supervisor? @relation(fields: [supervisorId], references: [id])
+    supervisorFeedback          String?
+    supervisorFeedbackOnPatient String?
+    supervisorRatings           String?
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    supervisorId String?
+    patientId    String
+    therapistId  String
+    therapist    Therapist   @relation(fields: [therapistId], references: [id])
+    patient      Patient     @relation(fields: [patientId], references: [id])
+    Supervisor   Supervisor? @relation(fields: [supervisorId], references: [id])
 }

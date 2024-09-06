@@ -21,7 +21,7 @@ export const POST = async (req: NextRequest) => {
             return NextResponse.json({ error: "Unauthorized: Therapist not found" }, { status: 401 });
         }
 
-        const { patientId, date, activities, sessionType } = await req.json();
+        const { patientId, date, activities, sessionType, duration } = await req.json();
 
         // Basic validation for the required fields
         if (!patientId || !date || !activities || !sessionType) {
@@ -37,6 +37,7 @@ export const POST = async (req: NextRequest) => {
         const session = await prisma.sessionLog.create({
             data: {
                 patientId,
+                duration,
                 therapistId: therapist.id,
                 date: new Date(date),
                 responses: "",
