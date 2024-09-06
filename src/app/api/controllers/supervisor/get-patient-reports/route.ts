@@ -1,4 +1,4 @@
-import { NextRequest,NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
@@ -8,10 +8,10 @@ export const GET = async (req: NextRequest) => {
         const id = req.nextUrl.searchParams.get("id");
 
         if (!id) return NextResponse.json({ error: "Missing id query parameter" }, { status: 400 });
-        const therapist = await prisma.therapist.findUnique({ where: { id }, select:{assignedPatients: true} },);
-        if (!therapist) return NextResponse.json({ error: "Therapist not found" }, { status: 404 });
+        const patient = await prisma.patient.findUnique({ where: { id }, select:{progressReports: true} },);
+        if (!patient) return NextResponse.json({ error: "Patient not found" }, { status: 404 });
 
-        return NextResponse.json({ patients : therapist.assignedPatients }, { status: 200 });
+        return NextResponse.json({ progressReports : patient.progressReports }, { status: 200 });
     } catch (error) {
         return NextResponse.json({ error: "Internal server error" }, { status: 500 });
         

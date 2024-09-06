@@ -1,60 +1,55 @@
 import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
+import { s } from "framer-motion/client";
 
 const prisma = new PrismaClient();
 
 export const PATCH = async (req: NextRequest) => {
   try {
-    // Extract the id from the URL query parameters
-    const { searchParams } = new URL(req.url);
-    const id = searchParams.get("id");
-
-    if (!id) {
-      return NextResponse.json({ error: "Invalid report ID" }, { status: 400 });
-    }
-
-    // Parse the request body to get supervisor feedback details
     const {
       supervisorFeedback,
       supervisorFeedbackOnPatient,
       supervisorRatings,
-      supervisorId,
+      progressReportId,
     } = await req.json();
 
-    // Validate the input
+    // Validate the input (trim spaces to ensure non-empty strings)
     if (
-      !supervisorFeedback ||
-      !supervisorFeedbackOnPatient ||
-      !supervisorRatings
+      !supervisorFeedback?.trim() ||
+      !supervisorFeedbackOnPatient?.trim() ||
+      !supervisorRatings?.trim()
     ) {
       return NextResponse.json(
-        { error: "No feedback data provided" },
+        { error: "Feedback, Feedback on Patient, and Ratings are required" },
         { status: 400 }
       );
     }
 
     // Update the progress report with supervisor feedback
     const updatedProgressReport = await prisma.progressReport.update({
-      where: { id },
+      where: { id: progressReportId },
       data: {
         supervisorFeedback,
         supervisorFeedbackOnPatient,
         supervisorRatings,
-        supervisorId,
         updatedAt: new Date(),
       },
     });
 
-    await prisma.notifications.create({
-      data: {
-        message: `Supervisor feedback updated for progress report ${id}`,
-        date : new Date(),
-        type: "feedback",
-        therapistId: updatedProgressReport.therapistId,
-        patientId: updatedProgressReport.patientId,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      }});
+    // Ensure therapistId and patientId exist before creating the notification
+    if (updatedProgressReport.therapistId && updatedProgressReport.patientId) {
+      await prisma.notifications.create({
+        data: {
+          message: `Supervisor feedback updated for progress report ${updatedProgressReport.supervisorId}`,
+          date: new Date(),
+          type: "feedback",
+          therapistId: updatedProgressReport.therapistId,
+          patientId: updatedProgressReport.patientId,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+      });
+    }
 
     return NextResponse.json(
       {
@@ -63,16 +58,11 @@ export const PATCH = async (req: NextRequest) => {
       },
       { status: 200 }
     );
-  } catch (error) {
-    console.error(
-      "Error updating progress report with supervisor feedback:",
-      error
-    );
+  } catch (error: any) {
+    console.error("Error updating progress report with supervisor feedback:", error.message || error);
     return NextResponse.json(
       { error: "Error updating progress report" },
       { status: 500 }
     );
-  } finally {
-    await prisma.$disconnect();
   }
 };

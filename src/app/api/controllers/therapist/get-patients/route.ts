@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 import jwt from "jsonwebtoken";
+import { CloudFog } from "lucide-react";
 
 const prisma = new PrismaClient();
 
@@ -19,6 +20,8 @@ export const GET = async (req: NextRequest) => {
         if (!therapist) return NextResponse.json({ error: "Supervisor not found" }, { status: 404 });
 
         const allPatients = therapist.assignedPatients;
+        console.log(therapist)
+        console.log(allPatients)
 
         return NextResponse.json({ patients: allPatients, message: "All patient data sent" }, { status: 200 });
 

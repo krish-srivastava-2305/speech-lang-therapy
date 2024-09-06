@@ -19,7 +19,7 @@ export const POST = async (req: NextRequest) => {
         });
 
         await prisma.notifications.create({data: {
-            message: `Patient ${updatedPatient.name} has been allocated to therapist ${newTherapistId}`,
+            message: `Patient ${updatedPatient.name} has been allocated to therapist ${newTherapistId.name}`,
             date: new Date(),
             type: "allocation",
             therapistId: newTherapistId,
