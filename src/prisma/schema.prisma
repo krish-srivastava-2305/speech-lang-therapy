@@ -18,7 +18,7 @@ model Supervisor {
     department         String?
     assignedTherapists Therapist[]      @relation("SupervisorToTherapist")
     assignedPatients   Patient[]        @relation("SupervisorToPatient")
-    progressReports    ProgressReport[]
+    progressReports    ProgressReport[] @relation("SupervisorToProgressReport")
     sessionLogs        SessionLog[]
     createdAt          DateTime         @default(now())
     updatedAt          DateTime         @updatedAt
@@ -109,4 +109,6 @@ model ProgressReport {
     status             String
     createdAt          DateTime     @default(now())
     updatedAt          DateTime     @updatedAt
+
+    Supervisor Supervisor[] @relation("SupervisorToProgressReport")
 }
