@@ -5,7 +5,7 @@ import React from 'react'
 function TherapistDashboard() {
   return (
     <div>
-      <PatientTab />
+      TherapistDashboard
     </div>
   )
 }

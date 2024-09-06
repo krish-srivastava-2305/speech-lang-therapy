@@ -3,7 +3,7 @@ import React from 'react'
 function SupervisorDashboard() {
   return (
     <div>
-      fsfdf
+      SuperVisorDash
     </div>
   )
 }

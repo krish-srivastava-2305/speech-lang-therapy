@@ -22,6 +22,7 @@ model Supervisor {
     sessionLogs        SessionLog[]
     createdAt          DateTime         @default(now())
     updatedAt          DateTime         @updatedAt
+    Notifications      Notifications[]
 }
 
 model Therapist {
@@ -49,6 +50,7 @@ model Therapist {
     createdAt      DateTime         @default(now())
     updatedAt      DateTime         @updatedAt
     ProgressReport ProgressReport[]
+    Notifications  Notifications[]
 }
 
 model Patient {
@@ -74,8 +76,9 @@ model Patient {
     supervisor      Supervisor?      @relation("SupervisorToPatient", fields: [supervisorId], references: [id])
     progressReports ProgressReport[]
 
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+    createdAt     DateTime        @default(now())
+    updatedAt     DateTime        @updatedAt
+    Notifications Notifications[]
 }
 
 model SessionLog {
@@ -131,4 +134,21 @@ model ProgressReport {
     therapist    Therapist   @relation(fields: [therapistId], references: [id])
     patient      Patient     @relation(fields: [patientId], references: [id])
     Supervisor   Supervisor? @relation(fields: [supervisorId], references: [id])
+}
+
+model Notifications {
+    id      String   @id @default(cuid())
+    date    DateTime
+    message String
+    type    String?
+
+    supervisorId String?
+    therapistId  String?
+    patientId    String?
+    supervisor   Supervisor? @relation(fields: [supervisorId], references: [id])
+    therapist    Therapist?  @relation(fields: [therapistId], references: [id])
+    patient      Patient?    @relation(fields: [patientId], references: [id])
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 }
