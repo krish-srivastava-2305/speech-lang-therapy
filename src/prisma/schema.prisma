@@ -18,7 +18,7 @@ model Supervisor {
     department         String?
     assignedTherapists Therapist[]      @relation("SupervisorToTherapist")
     assignedPatients   Patient[]        @relation("SupervisorToPatient")
-    progressReports    ProgressReport[]
+    progressReports    ProgressReport[] @relation("SupervisorToProgressReport")
     sessionLogs        SessionLog[]
     createdAt          DateTime         @default(now())
     updatedAt          DateTime         @updatedAt
@@ -77,7 +77,7 @@ model SessionLog {
     patientId        String
     patient          Patient         @relation(fields: [patientId], references: [id])
     activities       String[]
-    responses        String
+    responses        String //responses by the patient which will be updated by the therapist
     status           String
     notes            String?
     duration         String?
@@ -94,28 +94,21 @@ model SessionLog {
 }
 
 model ProgressReport {
-    id          String       @id @default(cuid())
-    date        DateTime
-    sessionLogs SessionLog[]
+    id                 String       @id @default(cuid())
+    date               DateTime
+    sessionLogs        SessionLog[]
+    recommendations    String[]
+    summary            String
+    supervisorFeedback String
+    patientId          String
+    patient            Patient      @relation(fields: [patientId], references: [id])
+    therapistId        String
+    therapist          Therapist    @relation(fields: [therapistId], references: [id])
+    activities         String[]
+    responses          String
+    status             String
+    createdAt          DateTime     @default(now())
+    updatedAt          DateTime     @updatedAt
 
-    recommendations  String
-    summary          String
-    challenges       String
-    patientBehaviour String
-    improvementAreas String
-    recomendations   String
-    goalsMet         String
-    goalsUnmet       String
-
-    supervisorFeedback          String
-    supervisorFeedbackOnPatient String
-    superVisorRatings           String
-    createdAt                   DateTime    @default(now())
-    updatedAt                   DateTime    @updatedAt
-    supervisorId                String?
-    patientId                   String
-    therapistId                 String
-    therapist                   Therapist   @relation(fields: [therapistId], references: [id])
-    patient                     Patient     @relation(fields: [patientId], references: [id])
-    Supervisor                  Supervisor? @relation(fields: [supervisorId], references: [id])
+    Supervisor Supervisor[] @relation("SupervisorToProgressReport")
 }
