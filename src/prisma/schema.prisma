@@ -103,13 +103,12 @@ model ProgressReport {
     challenges       String
     patientBehaviour String
     improvementAreas String
-    recomendations   String
     goalsMet         String
     goalsUnmet       String
 
     supervisorFeedback          String
     supervisorFeedbackOnPatient String
-    superVisorRatings           String
+    supervisorRatings           String
     createdAt                   DateTime    @default(now())
     updatedAt                   DateTime    @updatedAt
     supervisorId                String?
