@@ -6,9 +6,17 @@ const prisma = new PrismaClient();
 
 export const POST = async (req: NextRequest) => {
     try {
-        const {patientId, newTherapistId} = await req.json();
+        const {patientId, oldTherapistId, newTherapistId} = await req.json();
 
         const updatedPatient = await prisma.patient.update({where: {id: patientId}, data: {therapistId: newTherapistId}});
+
+        const therapist = await prisma.therapist.update({where: {id: oldTherapistId},
+            data: {assignedPatients: {disconnect: {id: patientId}}}
+        });
+
+        await prisma.therapist.update({where: {id: newTherapistId},
+            data: {assignedPatients: {connect: {id: patientId}}}
+        });
 
         // send email to patient
 

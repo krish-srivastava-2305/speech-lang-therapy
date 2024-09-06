@@ -93,22 +93,28 @@ model SessionLog {
     Supervisor       Supervisor?     @relation(fields: [supervisorId], references: [id])
 }
 
-model ProgressReport {
-    id                 String       @id @default(cuid())
-    date               DateTime
-    sessionLogs        SessionLog[]
-    recommendations    String[]
-    summary            String
-    supervisorFeedback String
-    patientId          String
-    patient            Patient      @relation(fields: [patientId], references: [id])
-    therapistId        String
-    therapist          Therapist    @relation(fields: [therapistId], references: [id])
-    activities         String[]
-    responses          String
-    status             String
-    createdAt          DateTime     @default(now())
-    updatedAt          DateTime     @updatedAt
+model ProgressReport{
+    id          String       @id @default(cuid())
+    date        DateTime
+    sessionLogs SessionLog[]
 
-    Supervisor Supervisor[] @relation("SupervisorToProgressReport")
+    recommendations  String
+    summary          String
+    challenges       String
+    patientBehaviour String
+    improvementAreas String
+    goalsMet         String
+    goalsUnmet       String
+
+    supervisorFeedback          String
+    supervisorFeedbackOnPatient String
+    supervisorRatings           String
+    createdAt                   DateTime    @default(now())
+    updatedAt                   DateTime    @updatedAt
+    supervisorId                String?
+    patientId                   String
+    therapistId                 String
+    therapist                   Therapist   @relation(fields: [therapistId], references: [id])
+    patient                     Patient     @relation(fields: [patientId], references: [id])
+    Supervisor                  Supervisor? @relation(fields: [supervisorId], references: [id])
 }

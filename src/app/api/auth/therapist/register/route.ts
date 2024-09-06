@@ -48,11 +48,13 @@ export const POST = async (req: NextRequest) => {
             }
         });
 
+        await prisma.supervisor.update({where: {id: supervisor}, data: {assignedTherapists: {connect: {id: newUser.id}}}});
+
         if (!newUser) {
             return NextResponse.json({ error: "Error creating account" }, { status: 401 });
         }
 
-        const response = NextResponse.json({ message: "Account created successfully", token }, { status: 201 });
+        const response = NextResponse.json({ message: "Account created successfully", token }, { status: 200 });
 
         response.cookies.set("token", token)
         return response;
