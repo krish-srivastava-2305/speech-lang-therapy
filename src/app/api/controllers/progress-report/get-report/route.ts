@@ -14,21 +14,12 @@ export const GET = async (req: NextRequest) => {
       );
     }
 
-    // Fetch the progress report for the specified patient from the database
-    const progressReport = await prisma.progressReport.findUnique({
-      where: {
-        id, // Use the extracted patientId
-      },
-    });
 
-    if (!progressReport) {
-      return NextResponse.json(
-        { message: "No progress report found." },
-        { status: 404 }
-      );
-    }
+    const patient = await prisma.patient.findUnique({ where: { id }, select: { progressReports: true } });
 
-    return NextResponse.json({ progressReport }, { status: 200 });
+    if(!patient) {  return NextResponse.json({ error: "Patient not found" }, { status: 404 }); }
+
+    return NextResponse.json({ progressReport: patient?.progressReports }, { status: 200 });
   } catch (error) {
     console.error("Error fetching progress report:", error);
     return NextResponse.json(

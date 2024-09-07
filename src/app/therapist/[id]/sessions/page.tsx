@@ -9,7 +9,7 @@ interface Session {
   id: string;
   date: string;
   sessionType: string;
-  activities: string[];
+  activities: string;
   responses: string;
   notes: string;
   status: string;
@@ -20,9 +20,16 @@ function TherapistSessions() {
   const [sessions, setSessions] = useState<Session[] | null>(null);
   const [loading, setLoading] = useState(true);
   const [expandedSessions, setExpandedSessions] = useState<string[]>([]);
-  const [activeSessionId, setActiveSessionId] = useState<string | null>(null); // For editing responses
+  const [activeSessionId, setActiveSessionId] = useState<string | null>(null);
   const [newResponses, setNewResponses] = useState<string>('');
   const [newNotes, setNewNotes] = useState<string>('');
+
+
+  const [duration, setDuration] = useState<string>('');
+  const [activities, setActivities] = useState<string>(''); 
+  const [sessionType, setSessionType] = useState<string>('');
+  const [date, setDate] = useState<string>('');
+  const [showAddSessionForm, setShowAddSessionForm] = useState(false); // Toggle for adding new session
 
   useEffect(() => {
     fetchSessions();
@@ -65,6 +72,25 @@ function TherapistSessions() {
     }
   };
 
+  const handleSessionCreation = async () => {
+    try {
+      await axios.post('/api/controllers/session/create-session', {
+        patientId: id,
+        date, 
+        activities,
+        sessionType,
+        duration
+      });
+      toast.success("Session created successfully!");
+      setShowAddSessionForm(false);
+      fetchSessions();
+    } catch (error: any) {
+      const errorMsg = error.response?.data?.error || "Failed to create session.";
+      toast.error(errorMsg);
+    }
+  };
+
+
   if (loading) {
     return (
       <div className="flex justify-center items-center h-screen">
@@ -102,7 +128,7 @@ function TherapistSessions() {
               {expandedSessions.includes(session.id) && (
                 <div className="p-4 space-y-4">
                   <p><strong>Status:</strong> {session.status}</p>
-                  <p><strong>Activities:</strong> {session.activities}</p>
+                  <p><strong>Activities:</strong> {session.activities}</p> 
                   <p><strong>Responses:</strong> {session.responses || "No responses yet"}</p>
                   <p><strong>Notes:</strong> {session.notes || "No notes yet"}</p>
                   {activeSessionId === session.id ? (
@@ -138,6 +164,58 @@ function TherapistSessions() {
               )}
             </div>
           ))
+        )}
+
+        {/* Button to toggle the Add Session form */}
+        <button
+          onClick={() => setShowAddSessionForm(!showAddSessionForm)}
+          className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full mt-6 flex items-center"
+        >
+          <Plus className="w-5 h-5 mr-2" /> Add New Session
+        </button>
+
+        {/* Form to add a new session */}
+        {showAddSessionForm && (
+          <div className="bg-white rounded-lg shadow-md mt-4 p-6">
+            <h2 className="text-xl font-semibold mb-4">Create New Session</h2>
+            <input
+              type="text"
+              name="sessionType"
+              placeholder="Session Type"
+              value={sessionType}
+              onChange={(e) => setSessionType(e.target.value)}
+              className="w-full p-2 border border-gray-300 rounded-md mb-4"
+            />
+            <input 
+              type="text"
+              name="duration"
+              placeholder="Duration (e.g., 30 minutes)"
+              value={duration}
+              onChange={(e) => setDuration(e.target.value)}
+              className="w-full p-2 border border-gray-300 rounded-md mb-4"
+            />
+            <input
+              type="text"
+              name="activities"
+              placeholder="Activities (comma separated)"
+              value={activities}
+              onChange={(e) => setActivities(e.target.value)}
+              className="w-full p-2 border border-gray-300 rounded-md mb-4"
+            />
+            <input
+              type="date"
+              name="date"
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+              className="w-full p-2 border border-gray-300 rounded-md mb-4"
+            />
+            <button
+              onClick={handleSessionCreation}
+              className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full"
+            >
+              Create Session
+            </button>
+          </div>
         )}
       </div>
     </div>

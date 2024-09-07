@@ -28,6 +28,8 @@ export const POST = async (req: NextRequest) => {
             return NextResponse.json({ error: "Bad Request: Missing required fields" }, { status: 400 });
         }
 
+        console.log(patientId, date, activities, sessionType, duration);
+
         // Check if patient exists
         const patient = await prisma.patient.findUnique({ where: { id: patientId } });
         if (!patient) {

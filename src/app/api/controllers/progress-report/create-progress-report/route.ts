@@ -7,7 +7,6 @@ const prisma = new PrismaClient();
 
 export const POST = async (req: NextRequest) => {
   try {
-    // Extract and decode the token from cookies
     const token = req.cookies.get("token")?.value;
     if (!token) {
       return NextResponse.json(
@@ -24,7 +23,6 @@ export const POST = async (req: NextRequest) => {
       );
     }
 
-    // Verify that the therapist exists in the database
     const therapist = await prisma.therapist.findUnique({
       where: { email: decodedToken.email },
     });
@@ -35,10 +33,8 @@ export const POST = async (req: NextRequest) => {
       );
     }
 
-    // Extract details for creating the progress report
     const {
       patientId,
-      date,
       recommendations,
       summary,
       challenges,
@@ -46,18 +42,18 @@ export const POST = async (req: NextRequest) => {
       improvementAreas,
       goalsMet,
       goalsUnmet,
-      sessionLogs,
+      sessionLogIds,
     } = await req.json();
 
-    // Validate the required fields
-    if (!patientId || !date || !summary) {
+    const sessionLogIdsArray = sessionLogIds.split(",").map((id: string) => id.trim());
+
+    if (!patientId || !summary || !Array.isArray(sessionLogIdsArray) || sessionLogIds.length === 0) {
       return NextResponse.json(
-        { error: "Bad Request: Missing required fields" },
+        { error: "Bad Request: Missing required fields or session log IDs" },
         { status: 400 }
       );
     }
 
-    // Check if the patient exists
     const patient = await prisma.patient.findUnique({
       where: { id: patientId },
     });
@@ -68,10 +64,9 @@ export const POST = async (req: NextRequest) => {
       );
     }
 
-    // Create the new progress report
     const newProgressReport = await prisma.progressReport.create({
       data: {
-        date: new Date(date),
+        date: new Date(),
         recommendations,
         summary,
         challenges,
@@ -82,38 +77,12 @@ export const POST = async (req: NextRequest) => {
         therapistId: therapist.id,
         patientId: patient.id,
         sessionLogs: {
-          create: sessionLogs.map((log: any) => ({
-            date: new Date(log.date),
-            notes: log.notes,
-            activities: log.activities,
-            modifications: log.modifications,
-            // Additional fields as per the schema
-          })),
+          connect: sessionLogIdsArray.map((id: string) => ({ id })),
         },
         createdAt: new Date(),
         updatedAt: new Date(),
       },
     });
-
-    // update details of supervisor therapist and patient
-
-    const updateTherapist = await prisma.therapist.update({where: {id: therapist.id}, data: {ProgressReport: {connect: {id: newProgressReport.id}}}});
-
-    const updatePatient = await prisma.patient.update({where: {id: patient.id}, data: {progressReports: {connect: {id: newProgressReport.id}}}});
-
-    const updateSupervisor = await prisma.supervisor.update({where: {id: therapist.supervisorId!}, data: {progressReports: {connect: {id: newProgressReport.id}}}});
-
-    const notification = await prisma.notifications.create({ 
-      data:{
-        message: `Progress report for patient ${patient.name} created by therapist ${therapist.name}`,
-        date: new Date(),
-        type: "progressReport",
-        patientId: patient.id,
-        supervisorId: therapist.supervisorId!,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-    }});
-
 
     return NextResponse.json(
       {
@@ -132,3 +101,4 @@ export const POST = async (req: NextRequest) => {
     await prisma.$disconnect();
   }
 };
+
