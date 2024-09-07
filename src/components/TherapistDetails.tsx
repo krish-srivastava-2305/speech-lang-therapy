@@ -1,6 +1,6 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import toast, { Toaster } from 'react-hot-toast';
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
 
 // Define the structure of the Therapist data
 interface Therapist {
@@ -25,7 +25,9 @@ function TherapistDetails() {
   const fetchTherapist = async () => {
     setLoading(true);
     try {
-      const response = await axios.get('/api/controllers/patient/get-therapist');
+      const response = await axios.get(
+        "/api/controllers/patient/get-therapist"
+      );
       setTherapist(response.data.therapist);
 
       if (response.status === 200) {
@@ -48,7 +50,7 @@ function TherapistDetails() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-100 py-10 rounded-3xl">
+    <div className="min-h-screen bg-gradient-to-b from-[#e6f7ff] to-[#035790] py-10 rounded-3xl">
       <Toaster />
       {/* Change UI from here*/}
       <div className="container mx-auto px-4">
@@ -58,43 +60,48 @@ function TherapistDetails() {
           <div className="text-red-500 text-center">{error}</div>
         ) : (
           therapist && (
-            <div className="bg-white shadow-md rounded-lg p-6 max-w-lg mx-auto">
-              <h2 className="text-2xl font-bold text-gray-800 mb-4">
+            <>
+              <h2 className="text-4xl font-bold text-gray-800 mb-4">
                 Therapist Details
               </h2>
-              <p>
+              <p className="text-xl">
                 <strong>Name:</strong> {therapist.name || "Not provided"}
               </p>
-              <p>
+              <p className="text-xl">
                 <strong>Email:</strong> {therapist.email}
               </p>
-              <p>
+              <p className="text-xl">
                 <strong>Phone:</strong> {therapist.phone || "Not provided"}
               </p>
-              <p>
-                <strong>Department:</strong> {therapist.department || "Not provided"}
+              <p className="text-xl">
+                <strong>Department:</strong>{" "}
+                {therapist.department || "Not provided"}
               </p>
-              <p>
-                <strong>Specialization:</strong> {therapist.specialization || "Not provided"}
+              <p className="text-xl">
+                <strong>Specialization:</strong>{" "}
+                {therapist.specialization || "Not provided"}
               </p>
-              <p>
-                <strong>Location:</strong> {therapist.city ? `${therapist.city}, ${therapist.state}` : "Not provided"}
+              <p className="text-xl">
+                <strong>Location:</strong>{" "}
+                {therapist.city
+                  ? `${therapist.city}, ${therapist.state}`
+                  : "Not provided"}
               </p>
-              <p>
+              <p className="text-xl">
                 <strong>Workload:</strong> {therapist.workload} patients
               </p>
               {therapist.rating && (
-                <p>
+                <p className="text-xl">
                   <strong>Rating:</strong> {therapist.rating.toFixed(1)} / 5
                 </p>
               )}
-              <button
+              {/* <button
                 className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
-                onClick={() => toast('This is a demo button')}
+                onClick={() => toast("This is a demo button")}
               >
                 Action Button
-              </button>
-            </div>
+              </button> */}
+            </>
           )
         )}
       </div>

@@ -1,6 +1,6 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import toast, { Toaster } from 'react-hot-toast';
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
 
 // Define the structure of the Supervisor data
 interface Supervisor {
@@ -21,19 +21,21 @@ const SupervisorDetails: React.FC = () => {
   const fetchSupervisor = async () => {
     setLoading(true);
     try {
-      const response = await axios.get('/api/controllers/patient/get-supervisor'); 
+      const response = await axios.get(
+        "/api/controllers/patient/get-supervisor"
+      );
       setSupervisor(response.data.supervisor);
 
       if (response.status === 200) {
-        console.log('successfully fetched supervisor details');
+        console.log("successfully fetched supervisor details");
       } else {
-        toast.error('Failed to get Supervisor details');
+        toast.error("Failed to get Supervisor details");
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        setError(error.response?.data.error || 'An error occurred');
+        setError(error.response?.data.error || "An error occurred");
       }
-      toast.error('An error occurred while fetching the supervisor details');
+      toast.error("An error occurred while fetching the supervisor details");
     } finally {
       setLoading(false);
     }
@@ -44,7 +46,7 @@ const SupervisorDetails: React.FC = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-100 py-10 rounded-3xl">
+    <div className="min-h-screen bg-gradient-to-b from-[#e6f7ff] to-[#035790] py-10 rounded-3xl">
       <Toaster />
 
       {/* Change UI from here*/}
@@ -55,21 +57,22 @@ const SupervisorDetails: React.FC = () => {
           <div className="text-red-500 text-center">{error}</div>
         ) : (
           supervisor && (
-            <div className="bg-white shadow-md rounded-lg p-6 max-w-lg mx-auto">
-              <h2 className="text-2xl font-bold text-gray-800 mb-4">
+            <>
+              <h2 className="text-4xl font-bold text-gray-800 mb-4">
                 Supervisor Details
               </h2>
-              <p>
-                <strong>Name:</strong> {supervisor.name || 'Not provided'}
+              <p className="text-xl">
+                <strong>Name:</strong> {supervisor.name || "Not provided"}
               </p>
-              <p>
+              <p className="text-xl">
                 <strong>Email:</strong> {supervisor.email}
               </p>
-              <p>
-                <strong>Phone:</strong> {supervisor.phone || 'Not provided'}
+              <p className="text-xl">
+                <strong>Phone:</strong> {supervisor.phone || "Not provided"}
               </p>
-              <p>
-                <strong>Department:</strong> {supervisor.department || 'Not provided'}
+              <p className="text-xl">
+                <strong>Department:</strong>{" "}
+                {supervisor.department || "Not provided"}
               </p>
               {/* <p>
                 <strong>Assigned Therapists:</strong> {supervisor.assignedTherapists.length}
@@ -91,7 +94,7 @@ const SupervisorDetails: React.FC = () => {
                   </li>
                 ))}
               </ul> */}
-            </div>
+            </>
           )
         )}
       </div>
