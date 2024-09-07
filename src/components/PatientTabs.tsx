@@ -39,7 +39,7 @@ export function PatientTab() {
       title: "Notifcations",
       value: "notifications",
       content: (
-        <div className="w-full overflow-hidden relative h-full rounded-2xl p-10 text-xl md:text-4xl font-bold text-white bg-gradient-to-br from-purple-700 to-violet-900">
+        <div className="w-full overflow-hidden relative h-full rounded-2xl p-10 text-xl md:text-4xl font-bold text-white bg-gradient-to-br from-yellow-700 to-violet-900">
           <p>Random tab</p>
         </div>
       ),
@@ -47,7 +47,7 @@ export function PatientTab() {
   ];
 
   return (
-    <div className="min-h-screen md:h-[40rem] [perspective:1000px] relative b flex flex-col mx-auto w-full  items-start justify-start my-40 px-24">
+    <div className="min-h-screen md:h-[40rem] [perspective:1000px] relative b flex flex-col mx-auto w-full items-start justify-start my-20 px-14">
       <Tabs tabs={tabs} />
     </div>
   );

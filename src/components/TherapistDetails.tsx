@@ -48,7 +48,7 @@ function TherapistDetails() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-100 py-10">
+    <div className="min-h-screen bg-gray-100 py-10 rounded-3xl">
       <Toaster />
       {/* Change UI from here*/}
       <div className="container mx-auto px-4">
