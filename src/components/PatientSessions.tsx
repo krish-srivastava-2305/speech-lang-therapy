@@ -64,7 +64,7 @@ const SessionCard: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#e6f7ff] to-[#035790] py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gradient-to-b from-[#e6f7ff] to-[#035790] py-12 px-4 sm:px-6 lg:px-8 rounded-3xl">
       <Toaster />
       <div className="max-w-7xl mx-auto">
         <h1 className="text-center text-4xl sm:text-5xl font-extrabold text-white mb-12 tracking-tight leading-tight">
