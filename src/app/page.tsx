@@ -46,18 +46,18 @@ export default function Home() {
     return (
       <div className="border-b pb-4">
         <h3 className="text-xl font-semibold mb-2">{question}</h3>
-        <p className="text-gray-600">{answer}</p>
+        <p className="text-black">{answer}</p>
       </div>
     );
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+    <main className="flex min-h-screen flex-col items-center justify-between p-24 text-black">
       {/* <h1>Speech Lang Therapy</h1> */}
 
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
-        <header className="bg-white shadow-sm sticky top-0 z-10">
-          <nav className="container mx-auto px-6 py-3 flex justify-between items-center">
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100  rounded-2xl">
+        <header className="bg-white shadow-sm sticky top-0 z-10 rounded-2xl">
+          <nav className="container mx-auto px-6 py-3 flex justify-between items-center rounded-2xl ">
             <div className="text-2xl font-bold text-indigo-600">Speechदी </div>
             {/* <div className="space-x-4">
             <a href="#home" className="text-gray-600 hover:text-indigo-600">Home</a>
@@ -94,10 +94,10 @@ export default function Home() {
 
           <section id="features" className="bg-white py-12">
             <div className="container mx-auto px-6">
-              <h2 className="text-3xl font-bold text-center mb-8">
+              <h2 className="text-3xl font-bold text-center text-black mb-8">
                 Key Features
               </h2>
-              <div className="grid md:grid-cols-3 gap-8">
+              <div className="grid md:grid-cols-3 gap-8 ">
                 <FeatureCard
                   icon={<Users className="w-12 h-12 text-indigo-600" />}
                   title="Seamless Collaboration"
@@ -119,7 +119,7 @@ export default function Home() {
 
           <section id="about" className="py-12">
             <div className="container mx-auto px-6">
-              <h2 className="text-3xl font-bold text-center mb-8">
+              <h2 className="text-3xl font-bold text-center mb-8 text-black">
                 About Speechदी
               </h2>
               <p className="text-lg text-gray-600 mb-6">
@@ -141,7 +141,7 @@ export default function Home() {
 
           <section id="testimonials" className="bg-indigo-100 py-12">
             <div className="container mx-auto px-6">
-              <h2 className="text-3xl font-bold text-center mb-8">
+              <h2 className="text-3xl font-bold text-center text-black mb-8">
                 What Our Users Say
               </h2>
               <div className="grid md:grid-cols-2 gap-8">
@@ -157,9 +157,9 @@ export default function Home() {
             </div>
           </section>
 
-          <section id="faq" className="py-12">
+          <section id="faq" className="py-12 bg-slate-300">
             <div className="container mx-auto px-6">
-              <h2 className="text-3xl font-bold text-center mb-8">
+              <h2 className="text-3xl font-bold text-center mb-8 text-black">
                 Frequently Asked Questions
               </h2>
               <div className="space-y-4">

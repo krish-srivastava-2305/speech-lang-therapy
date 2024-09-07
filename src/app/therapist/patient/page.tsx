@@ -61,15 +61,20 @@ function PatientInfo() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">
-        Patient Information
-      </h1>
+    <div className="container mx-auto px-4 py-8 mt-20">
+
+
+    
+    <h2 className="text-4xl font-bold text-blue-200 mb-10 text-center">
+      Patient Information
+    </h2>
+   
+  
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {patients.map((patient: any) => (
           <div
-            key={patient.id}
-            className="bg-white shadow-lg rounded-lg p-6 transition-transform hover:scale-105 duration-300"
+          key={patient.id}
+          className="bg-white shadow-lg rounded-lg p-6 transition-transform hover:scale-105 duration-300"
           >
             <div className="flex items-center mb-4">
               <div className="w-12 h-12 bg-blue-500 text-white rounded-full flex items-center justify-center text-lg font-semibold">

@@ -39,7 +39,7 @@ export function PatientTab() {
   ];
 
   return (
-    <div className="min-h-screen md:h-[40rem] [perspective:1000px] relative b flex flex-col mx-auto w-full items-start justify-start my-20 px-14">
+    <div className="min-h-screen md:h-[40rem] [perspective:1000px] relative b flex flex-col mx-auto w-full text-black items-start justify-start my-20 px-14">
       <Tabs tabs={tabs} />
     </div>
   );

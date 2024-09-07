@@ -110,10 +110,10 @@ export default function SupervisorTherapists() {
     //     )}
     //   </div>
     // </div>
-     <div className="min-h-screen bg-gradient-to-br from-gray-100 to-gray-200 py-12">
+     <div className="min-h-screen py-12">
       <Toaster />
       <div className="container mx-auto px-4">
-        <h1 className="text-4xl font-bold text-center mb-12 text-gray-800">
+        <h1 className="text-4xl font-bold text-center mb-12 mt-10 text-blue-200">
           Therapists Under Your Supervision
         </h1>
         {loading ? (
@@ -132,7 +132,7 @@ export default function SupervisorTherapists() {
                 key={therapist.id}
                 className="bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl hover:scale-105"
               >
-                <div className="h-24 bg-gradient-to-r from-blue-500 to-purple-600"></div>
+                <div className="h-24 bg-gradient-to-r from-blue-200 to-blue-900"></div>
                 <div className="p-8">
                   <h2 className="text-2xl font-semibold text-gray-800 text-center mb-6">
                     {therapist.name || "Unknown Name"}
