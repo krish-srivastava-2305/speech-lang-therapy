@@ -8,7 +8,6 @@ import toast, { Toaster } from "react-hot-toast";
 import Link from "next/link";
 
 export function LogInForm({ formFor }: { formFor: string }) {
-
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false); // Loading state
@@ -17,7 +16,10 @@ export function LogInForm({ formFor }: { formFor: string }) {
     e.preventDefault();
     setLoading(true); // Start loading
     try {
-      const res = await axios.post(`/api/auth/${formFor}/login`, { email, password });
+      const res = await axios.post(`/api/auth/${formFor}/login`, {
+        email,
+        password,
+      });
       if (res.status === 200) {
         toast.success("Login successful");
       }
@@ -38,7 +40,7 @@ export function LogInForm({ formFor }: { formFor: string }) {
       <Toaster />
       <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white dark:bg-black">
         <h2 className="font-bold text-xl text-neutral-800 dark:text-neutral-200">
-          Welcome to Speechly! 🎉
+          Welcome to Speechदी! 🎉
         </h2>
         <p className="text-neutral-600 text-sm max-w-sm mt-2 dark:text-neutral-300">
           Login to your account to continue!
@@ -83,11 +85,14 @@ export function LogInForm({ formFor }: { formFor: string }) {
           <div className="bg-gradient-to-r from-transparent via-neutral-300 dark:via-neutral-700 to-transparent my-8 h-[1px] w-full" />
         </form>
         <p className="text-center text-sm text-neutral-600 dark:text-neutral-300">
-            Don&apos;t have an account?{" "}
-            <Link href={`/${formFor}/register`} className="text-blue-500 hover:underline">
-              Sign Up
-            </Link>
-          </p>
+          Don&apos;t have an account?{" "}
+          <Link
+            href={`/${formFor}/register`}
+            className="text-blue-500 hover:underline"
+          >
+            Sign Up
+          </Link>
+        </p>
       </div>
     </div>
   );
