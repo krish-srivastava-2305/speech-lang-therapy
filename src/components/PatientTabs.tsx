@@ -10,36 +10,28 @@ export function PatientTab() {
     {
       title: "Sessions",
       value: "sessions",
-      content: (
-        <PatientSessions />
-      ),
+      content: <PatientSessions />,
     },
     {
       title: "Reports",
       value: "reports",
-      content: (
-        <PatientReports />
-      ),
+      content: <PatientReports />,
     },
     {
       title: "Therapist",
       value: "therapist",
-      content: (
-        <TherapistDetails />
-      ),
+      content: <TherapistDetails />,
     },
     {
       title: "Supervisor",
       value: "supervisor",
-      content: (
-        <SupervisorDetails /> 
-      ),
+      content: <SupervisorDetails />,
     },
     {
       title: "Notifcations",
       value: "notifications",
       content: (
-        <div className="w-full overflow-hidden relative h-full rounded-2xl p-10 text-xl md:text-4xl font-bold text-white bg-gradient-to-br from-yellow-700 to-violet-900">
+        <div className="w-full overflow-hidden relative h-full rounded-2xl p-10 text-xl md:text-4xl font-bold text-white bg-gradient-to-b from-[#e6f7ff] to-[#035790]">
           <p>Random tab</p>
         </div>
       ),
