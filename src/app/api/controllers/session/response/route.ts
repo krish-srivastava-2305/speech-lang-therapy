@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 
 const prisma = new PrismaClient();
 
-export const POST = async (req: NextRequest) => {
+export const PATCH = async (req: NextRequest) => {
     try {
         // Get and validate the token
         const token = req.cookies.get("token")?.value;

@@ -52,12 +52,12 @@ function PatientInfo() {
 
   // Function to navigate to the progress report page
   const handleProgressReportClick = (patientId: string) => {
-    router.push(`/patient/${patientId}/get-progress-report`);
+    router.push(`/therapist/${patientId}/progress-report`);
   };
 
   // Function to navigate to the session logs page
   const handleSessionLogsClick = (patientId: string) => {
-    router.push(`/patient/${patientId}/get-sessions`);
+    router.push(`/therapist/${patientId}/sessions`);
   };
 
   return (
