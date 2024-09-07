@@ -6,11 +6,14 @@ import { cn } from "@/lib/util";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export function LogInForm({ formFor }: { formFor: string }) {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false); // Loading state
+
+  const router = useRouter()
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -22,6 +25,7 @@ export function LogInForm({ formFor }: { formFor: string }) {
       });
       if (res.status === 200) {
         toast.success("Login successful");
+        router.push(`/dashboard/${formFor}`); // Redirect to dashboard
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {
