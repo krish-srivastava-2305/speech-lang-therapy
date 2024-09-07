@@ -44,7 +44,7 @@ function PatientReports() {
 
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#e6f7ff] to-[#035790] py-12 rounded-3xl">
+    <div className="min-h-screen bg-gradient-to-b from-[#2fa2d7] to-[#035790] py-12 rounded-3xl">
       Progress Report
     </div>
   )

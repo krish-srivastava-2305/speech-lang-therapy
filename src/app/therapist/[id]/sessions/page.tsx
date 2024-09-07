@@ -100,10 +100,11 @@ function TherapistSessions() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen  py-12 px-4 mt-12 sm:px-6 lg:px-8">
       <Toaster />
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold text-gray-900 mb-8">Patient Sessions</h1>
+        
+        <h1 className="text-4xl font-bold text-blue-300 mb-8 text-center">Patient Sessions</h1>
 
         {sessions === null ? (
           <p className="text-center text-gray-600">Loading sessions...</p>

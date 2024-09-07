@@ -101,7 +101,7 @@ function ProgressReportView() {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-12 px-4 sm:px-6 lg:px-8">
       <Toaster />
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold text-gray-200 mb-8 text-center">Progress Reports</h1>
+        <h1 className="text-3xl font-bold text-gray-100 mb-8 text-center">Progress Reports</h1>
         {progressReports.length === 0 ? (
           <p className="text-center text-gray-200">No progress reports available.</p>
         ) : (

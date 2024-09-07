@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { HoveredLink, Menu, MenuItem, ProductItem } from "./ui/navbar-menu";
 import { cn } from "@/lib/util";
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 export function NavbarMenu() {
   return (
@@ -16,23 +17,24 @@ function Navbar({ className }: { className?: string }) {
   const [active, setActive] = useState<string | null>(null);
   return (
     <div
-      className={cn("fixed top-10 inset-x-0 max-w-2xl mx-auto z-50", className)}
-    >
-      <Menu setActive={setActive}>
-        <Link href='/' className="text-white">Home</Link>
-      
-        <MenuItem setActive={setActive} active={active} item="Login">
-          <div className="flex flex-col space-y-4 text-sm ">
-            <HoveredLink href="/supervisor/login">Supervisor</HoveredLink>
-            <HoveredLink href="/therapist/login">Therapist</HoveredLink>
-            <HoveredLink href="/patient/login">Patient</HoveredLink>
-          </div>
-        </MenuItem>
-
-        <Link href='/' className="text-white">More about us</Link>
-         
-        
-      </Menu>
-    </div>
+    className={cn("fixed top-4 inset-x-0 max-w-3xl mx-auto z-50", className)}
+  >
+    <Menu setActive={setActive}>
+      <nav className="px-4 py-3 bg-gradient-to-r from-blue-900 to-indigo-900 rounded-full shadow-lg">
+        <ul className="flex justify-around items-center space-x-2">
+          {['Home', 'Supervisor', 'Therapist', 'Patient', 'More about us'].map((item) => (
+            <motion.li key={item} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Link 
+                href={item === 'Home' ? '/' : `/${item.toLowerCase()}/login`}
+                className="text-white font-medium px-3 py-2 rounded-full transition-colors duration-200 hover:bg-blue-700 hover:text-blue-100"
+              >
+                {item}
+              </Link>
+            </motion.li>
+          ))}
+        </ul>
+      </nav>
+    </Menu>
+  </div>
   );
 }
