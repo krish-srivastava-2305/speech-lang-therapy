@@ -26,7 +26,7 @@ export function RegisterForm({ formFor }: any) {
     "Speech Therapy for Swallowing Difficulty"
   );
   const [state, setState] = useState<string>("Delhi");
-  const [city, setCity] = useState<string>("Janakpuri");
+  const [city, setCity] = useState<string>("");
   const [supervisor, setSupervisor] = useState<string>("");
 
   const [allCities, setAllCities] = useState<string[]>([]);
@@ -309,7 +309,6 @@ export function RegisterForm({ formFor }: any) {
                 <select
                   id="state"
                   className="w-52  h-11 rounded-lg text-white bg-[#27272A] sm:w-full"
-                  defaultValue={"Janakpuri"}
                   onChange={(e) => setCity(e.target.value)}
                 >
                   {allCities.map((city, index) => (
