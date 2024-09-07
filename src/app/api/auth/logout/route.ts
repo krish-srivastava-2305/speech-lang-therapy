@@ -11,10 +11,11 @@ export const POST = async (req: NextRequest) => {
         response.cookies.set("token", "", {
             httpOnly: true,
             maxAge: 0,
-            path: "/",
         });
 
-        return response;
+        
+
+        return response
 
     } catch (error) {
         console.error("Logout Error: ", error);
