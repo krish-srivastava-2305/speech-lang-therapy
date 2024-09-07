@@ -25,7 +25,9 @@ export function LogInForm({ formFor }: { formFor: string }) {
       });
       if (res.status === 200) {
         toast.success("Login successful");
-        router.push(`/dashboard/${formFor}`); // Redirect to dashboard
+        if(formFor === 'supervisor') router.push('/supervisor/therapist')
+        if(formFor === 'therapist') router.push('/therapist/patient')
+        if(formFor === 'patient') router.push('/dashboard/patient')
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {

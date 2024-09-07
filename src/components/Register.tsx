@@ -6,8 +6,11 @@ import { cn } from "@/lib/util";
 import india from "@/utils/indian-states";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
+import { useRouter } from "next/router";
 
 export function RegisterForm({ formFor }: any) {
+
+  const router = useRouter();
   const states = Object.keys(india);
   const [allSupervisors, setAllSupervisors] = useState<
     Array<{ id: string; name: string }>
@@ -109,9 +112,13 @@ export function RegisterForm({ formFor }: any) {
         setDepartment("");
         setSpecialization("Speech Therapy for Swallowing Difficulty");
         setMedicalIssue("Speech Therapy for Swallowing Difficulty");
-        setState("Delhi");
-        setCity("Janakpuri");
+        setState("");
+        setCity("");
         setSupervisor("");
+
+        if(formFor === 'supervisor') router.push('/supervisor/therapist')
+        if(formFor === 'therapist') router.push('/therapist/patient')
+        if(formFor === 'patient') router.push('/dashboard/patient')
       } else {
         toast.error(res?.data?.error || "Server error during registration.");
       }
