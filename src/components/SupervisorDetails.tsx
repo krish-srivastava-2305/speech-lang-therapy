@@ -50,7 +50,7 @@ const SupervisorDetails: React.FC = () => {
       <Toaster />
 
       {/* Change UI from here*/}
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-4 bg-white rounded-2xl w-1/2 p-4 bg-gradient-to-b from-[#bbc8cd] to-[#8bbada]">
         {loading ? (
           <div className="text-center">Loading...</div>
         ) : error ? (

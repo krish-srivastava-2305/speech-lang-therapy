@@ -53,14 +53,14 @@ function TherapistDetails() {
     <div className="min-h-screen bg-gradient-to-b from-[#2fa2d7] to-[#035790] py-10 rounded-3xl">
       <Toaster />
       {/* Change UI from here*/}
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-4 bg-white rounded-2xl w-1/2 p-4 bg-gradient-to-b from-[#bbc8cd] to-[#8bbada]">
         {loading ? (
           <div className="text-center">Loading...</div>
         ) : error ? (
           <div className="text-red-500 text-center">{error}</div>
         ) : (
           therapist && (
-            <>
+            <div>
               <h2 className="text-4xl font-bold text-gray-800 mb-4">
                 Therapist Details
               </h2>
@@ -101,7 +101,7 @@ function TherapistDetails() {
               >
                 Action Button
               </button> */}
-            </>
+            </div>
           )
         )}
       </div>
