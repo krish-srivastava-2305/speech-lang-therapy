@@ -37,7 +37,7 @@ export const POST = async (req: NextRequest): Promise<NextResponse> => {
         // Generate JWT token
         let token;
         try {
-            token = jwt.sign({ email }, process.env.JWT_SECRET, { expiresIn: "7d" });
+            token = jwt.sign({ email, userRole: "supervisor" }, process.env.JWT_SECRET, { expiresIn: "7d" });
         } catch (err) {
             console.error("Error generating JWT token", err);
             return NextResponse.json({ error: "Error creating account" }, { status: 500 });

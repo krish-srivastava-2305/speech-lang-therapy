@@ -93,7 +93,7 @@ export const POST = async (req: NextRequest) => {
         const salt = await genSalt(10);
         const hashedPassword = await hash(data.password, salt);
 
-        const token = jwt.sign({ email: data.email }, process.env.JWT_SECRET as string, { expiresIn: "7d" });
+        const token = jwt.sign({ email: data.email, userRole: "patient" }, process.env.JWT_SECRET as string, { expiresIn: "7d" });
 
         const newUser = await prisma.patient.create({
             data: {
