@@ -4,6 +4,7 @@ import PatientSessions from "./PatientSessions";
 import PatientReports from "./PatientReports";
 import TherapistDetails from "./TherapistDetails";
 import SupervisorDetails from "./SupervisorDetails";
+import PatientNotifications from "./PatientNotifications";
 
 export function PatientTab() {
   const tabs = [
@@ -30,11 +31,7 @@ export function PatientTab() {
     {
       title: "Notifcations",
       value: "notifications",
-      content: (
-        <div className="w-full overflow-hidden relative h-full rounded-2xl p-10 text-xl md:text-4xl font-bold text-white bg-gradient-to-b from-[#e6f7ff] to-[#035790]">
-          <p>Random tab</p>
-        </div>
-      ),
+      content: <PatientNotifications />,
     },
   ];
 

@@ -28,11 +28,12 @@ export function RegisterForm({ formFor }: any) {
   const [medicalIssue, setMedicalIssue] = useState<string>(
     "Speech Therapy for Swallowing Difficulty"
   );
-  const [state, setState] = useState<string>("Delhi");
-  const [city, setCity] = useState<string>("");
   const [supervisor, setSupervisor] = useState<string>("");
+  const [state, setState] = useState<string>("Delhi");
+  const [city, setCity] = useState<string>("Janakpuri");
 
-  const [allCities, setAllCities] = useState<string[]>([]);
+  // Initialize with cities of the first state, Delhi
+  const [allCities, setAllCities] = useState<string[]>(india[state as keyof typeof india]);
 
   useEffect(() => {
     const fetchSupervisors = async () => {
@@ -47,7 +48,11 @@ export function RegisterForm({ formFor }: any) {
   }, []);
 
   useEffect(() => {
-    setAllCities(india[state as keyof typeof india]);
+    const updatedCities = india[state as keyof typeof india];
+    if (updatedCities) {
+      setAllCities(updatedCities);
+      setCity(updatedCities[0]); // Set the city to the first option by default
+    }
   }, [state]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
