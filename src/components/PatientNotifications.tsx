@@ -42,8 +42,8 @@ function PatientNotifications() {
   }
 
   return (
-    <div className="container mx-auto p-4 bg-blue-950">
-      <h1 className="text-2xl font-bold mb-4">Notifications</h1>
+    <div className="min-h-screen container mx-auto p-4 bg-gradient-to-b from-[#2fa2d7] to-[#035790] rounded-3xl">
+      <h1 className="text-4xl font-bold text-blue-800 mb-4">Notifications</h1>
 
       {/* Loading Indicator */}
       {loading && <p>Loading notifications...</p>}
